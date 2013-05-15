@@ -1,0 +1,36 @@
+<div ng-include="'/static/views/header.html'"></div>
+
+<table id="tweets" class="table table-striped table-bordered table-hover">
+    <tr>
+        <td class="user-block">
+            Username:
+        </td>
+        <td class="user-block">
+            {{userDetails.messages.username}}
+        </td>
+    </tr>
+    <tr>
+        <td class="user-block">
+            Name:
+        </td>
+        <td class="user-block">
+            {{userDetails.messages.first_name}} {{userDetails.messages.last_name}}
+        </td>
+    </tr>
+    <tr>
+        <td class="user-block">
+            Email:
+        </td>
+        <td class="user-block">
+            {{userDetails.messages.email}}
+        </td>
+    </tr>
+    <tr>
+        <td class="user-block">
+            Date of birth:
+        </td>
+        <td class="user-block">
+            {{userDetails.messages.date_of_birth}}
+        </td>
+    </tr>
+</table>

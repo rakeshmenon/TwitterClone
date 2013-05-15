@@ -1,0 +1,13 @@
+<div ng-include="'/static/views/header.html'"></div>
+
+<table id="tweets" class="table table-striped table-bordered table-hover">
+    <tr ng-repeat="message in gtweetResult.messages">
+        <td class="user-block">
+            <a href="/#/user/{{message.owner__username}}">
+                <strong class="pull-left user-name">@{{message.owner__username}}</strong>
+            </a>
+            <p class="clear">{{message.content}}</p>
+            <small time-ago="{{message.posted_on}}"></small>
+        </td>
+    </tr>
+</table>

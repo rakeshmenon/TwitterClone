@@ -1,0 +1,25 @@
+<div class="navbar">
+    <div class="navbar-inner">
+        <a class="brand" href="/">GymTweeter</a>
+        <ul class="nav">
+            <li class="{{homeActive}}"><a href="/#/home">Home</a></li>
+            <li class="{{userActive}}"><a href="/#/me">My tweets</a></li>
+        </ul>
+        <div class="btn-group pull-right" ng-controller="UserDetailsCtrl">
+          <button class="btn dropdown-toggle" data-toggle="dropdown">
+            {{userDetails.messages.username}}
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+                <a href="/user/logout">Logout</a>
+            </li>
+          </ul>
+        </div>
+    </div>
+</div>
+<form class="form-horizontal" style="text-align:center;" ng-controller="TweetPostCtrl">
+    <input ng-model="tweet_text" type="text" style="width: 400px;height: 33px;" maxlength="140"/>
+    <input type="submit" value="Tweet" class="btn btn-large" ng-click="postTweet()"/>
+    <p style="margin-left:290px;display: block;color:#555;margin-top: 5px;">{{140-(tweet_text.length)}}</p>
+</form>

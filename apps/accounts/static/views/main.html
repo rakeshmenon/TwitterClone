@@ -1,0 +1,34 @@
+<div class="loginbox">
+    <h2>GymTweeter</h2>
+    <div class="btn-group">
+        <button type="button" class="btn btn-success" ng-model="radioModel" btn-radio="'Login'">Login</button>
+        <button type="button" class="btn btn-info" ng-model="radioModel" btn-radio="'Signup'">Signup</button>
+    </div>
+    <div style="padding: 20px 0;">
+      <form class="form-vertical" action="">
+        <div class="control-group">
+          <label for="username">Username</label>
+          <div class="controls">
+            <input id="username" type="text" ng-model="user.username">
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="password">Password</label>
+          <div class="controls">
+            <input id="password" type="password" ng-model="user.password">
+          </div>
+        </div>
+        <div class="control-group {{confirmHidden}}">
+          <label for="confirm_password">Confirm Password</label>
+          <div class="controls">
+            <input id="confirm_password" type="password" ng-model="user.confirm_password">
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <input type="submit" class="btn" value="{{radioModel}}" ng-click="checkCredentials()">
+          </div>
+        </div>
+      </form>
+    </div>
+</div>
