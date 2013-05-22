@@ -9,6 +9,7 @@ from django.utils import simplejson as json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.middleware.csrf import get_token
 
 import logging
 logger = logging.getLogger('logview.accounts')
@@ -86,6 +87,7 @@ class Login(TemplateView):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
+        csrf_token = get_token(request)
         return super(Login, self).dispatch(request, *args, **kwargs)
 
 class ProfileView(View):

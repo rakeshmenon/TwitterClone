@@ -1,30 +1,16 @@
 'use strict';
 
-//Controllers
-
-gymTweeter.controller("UserDetailsCtrl", function ($scope, $location, $resource) {
-  $scope.userInfo = $resource(
-    '/user/profile', {},
-    {
-      getUserDetails: {
-        method: 'GET'
-      }
-    }
-  );
-
-  $scope.userDetails = $scope.userInfo.getUserDetails();
-});
-
+// Auth Controller for the login/Signup page
 gymTweeter.controller("AuthCtrl", function ($scope, $location, $http) {
   $scope.radioModel = "Login";
-  $scope.confirmHidden = "hidden"
+  $scope.showConfirm = false;
 
   $scope.$watch("radioModel", function (newValue, oldValue) {
     switch($scope.radioModel) {
-      case "Login" : $scope.confirmHidden = "hidden";
+      case "Login" : $scope.showConfirm = false;
                      $scope.authUrl = "/user/login";
                      break;
-      case "Signup": $scope.confirmHidden = "";
+      case "Signup": $scope.showConfirm = true;
                      $scope.authUrl = "/user/register";
                      break;
     }
@@ -34,37 +20,19 @@ gymTweeter.controller("AuthCtrl", function ($scope, $location, $http) {
     $http({
       method: 'POST',
       url: $scope.authUrl,
-      data: $scope.user,
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      data: $scope.user
     }).success(function(data) {
-      $location.path("home");
+        $location.path("home");
     });
   };
 });
 
-gymTweeter.controller("TweetPostCtrl", function ($scope, $location, $http) {
-  $scope.postTweet = function () {
-    $http({
-      method: 'POST',
-      url: "/tweet/add",
-      data: {
-        content: $scope.tweet_text,
-        csrfmiddlewaretoken: readCookie("csrftoken")
-      },
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      }
-    }).success(function(data) {
-      $scope.$emit('tweeted');
-    });
-  }
-});
-
-gymTweeter.controller("SelfCtrl", function ($scope, $location, $resource) {
-  $scope.userActive = "active";
+// Controller for the user's home page
+gymTweeter.controller("HomeCtrl", function ($scope, $resource) {
+  $scope.homeActive = "active";
 
   $scope.gtweet = $resource(
-    '/tweet/self', {},
+    '/tweet/all', {},
     {
       get: {
         method: 'GET',
@@ -84,31 +52,43 @@ gymTweeter.controller("SelfCtrl", function ($scope, $location, $resource) {
   });
 });
 
-
-gymTweeter.controller("UserCtrl", function ($scope, $location, $resource, $routeParams) {
-  $scope.gtweet = $resource(
-    'http://search.twitter.com/:action',
+// Controller to retrieve the User's Details
+gymTweeter.controller("UserDetailsCtrl", function ($scope, $location, $resource) {
+  $scope.userInfo = $resource(
+    '/user/profile', {},
     {
-      action: "search.json",
-      q: $routeParams.id,
-      callback: 'JSON_CALLBACK'
-    },
-    {
-      get: {
-        method: 'JSONP'
+      getUserDetails: {
+        method: 'GET'
       }
     }
   );
 
-  $scope.gtweetResult = $scope.gtweet.get();
+  $scope.userDetails = $scope.userInfo.getUserDetails();
 });
 
+// Controller for posting a tweet
+gymTweeter.controller("TweetPostCtrl", function ($scope, $location, $http) {
+  $scope.postTweet = function () {
+    $http({
+      method: 'POST',
+      url: "/tweet/add",
+      data: {
+        content: $scope.tweet_text,
+        csrfmiddlewaretoken: readCookie("csrftoken")
+      }
+    }).success(function(data) {
+      $scope.tweet_text = "";
+      $scope.$emit('tweeted');
+    });
+  }
+});
 
-gymTweeter.controller("HomeCtrl", function ($scope, $location, $resource) {
-  $scope.homeActive = "active";
+// Controller for the currentuser-only tweets
+gymTweeter.controller("SelfCtrl", function ($scope, $location, $resource) {
+  $scope.userActive = "active";
 
   $scope.gtweet = $resource(
-    '/tweet/all', {},
+    '/tweet/self', {},
     {
       get: {
         method: 'GET',

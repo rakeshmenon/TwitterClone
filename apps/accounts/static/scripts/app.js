@@ -3,10 +3,10 @@
 function readCookie(name) {
   var nameEQ = name + "=";
   var ca = document.cookie.split(';');
-  for(var i=0;i < ca.length;i++) {
+  for(var i = 0; i < ca.length; i++) {
     var c = ca[i];
-    while (c.charAt(0)==' ') c = c.substring(1,c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
   }
   return null;
 }
@@ -38,7 +38,12 @@ gymTweeter.config(function ($routeProvider, $httpProvider) {
       redirectTo: '/'
     });
 
+  // Use x-www-form-urlencoded Content-Type
+  $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+
+  // Tranform JSON params to Parameter string for server comprehension
   $httpProvider.defaults.transformRequest = function(data){
+
     if (data === undefined) {
         return data;
     }

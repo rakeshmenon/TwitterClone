@@ -18,7 +18,7 @@
             <input id="password" type="password" ng-model="user.password">
           </div>
         </div>
-        <div class="control-group {{confirmHidden}}">
+        <div class="control-group" ng-show="showConfirm">
           <label for="confirm_password">Confirm Password</label>
           <div class="controls">
             <input id="confirm_password" type="password" ng-model="user.confirm_password">
